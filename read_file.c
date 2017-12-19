@@ -33,6 +33,7 @@ void open_file(char *file_name)
 
 void read_file(FILE *fd)
 {
+	int line_n;
 	char *lineprt;
 	size_t n;
 
@@ -43,9 +44,9 @@ void read_file(FILE *fd)
 		exit(EXIT_FAILURE);
 
 	/*Getting each line in the file*/
-	while (getline(&lineprt, &n, fd) != EOF)
+	for (line_n = 1; getline(&lineprt, &n, fd) != EOF; line_n++)
 	{
-		interpret_line(lineprt);
+		interpret_line(lineprt, line_n);
 	}
 	free(lineprt);
 }
@@ -56,20 +57,73 @@ void read_file(FILE *fd)
  * which function to call.
  * @lineptr: String representing a line in a file.
  */
-void interpret_line(char *lineptr)
+void interpret_line(char *lineptr, int line_number)
 {
 	const char *delim;
-	char *token;
+	char *opcode;
+	char *value;
 
-	if (lineprt == NULL)
+	if (lineptr == NULL)
 		exit(EXIT_FAILURE);
 
 	delim = "\n ";
-	token = strtok(lineptr, delim);
-
-	while (token != NULL)
+	opcode = strtok(lineptr, delim);
+	if (opcode == NULL)
 	{
-		printf("%s\n", token);
-		token = strtok(NULL, delim);
+		printf("err when opcode is NULL\n");
+		exit(1);
 	}
+	value = strtok(NULL, delim);
+	
+	find_func(opcode, value, line_number);
+}
+
+/**
+ * find_func - Finds the appropite function to run the opcode instructions.
+ * @opcode: The operation code, It could be push, pall, ...
+ * @value: The possible value for the operation.
+ * Return: TBD.s
+ */
+
+int find_func(char *opcode, char *value, int line_number)
+{
+	int i;
+
+	instruction_t func_list[] = {
+		{"push", add_to_stack},
+		{"pall", print_stack},
+		{NULL, NULL}
+	};
+
+	/*Iterates through list to fid the right function*/
+	for (i = 0; func_list[i].opcode != NULL; i++)
+	{
+		/*When 0 found the right opcode*/
+		if (strcmp(opcode, func_list[i].opcode) == 0)
+		{
+			call_fun(func_list[i].f, opcode, value, line_number);
+		}
+	}
+	/*printf("opcode: %s\nvalue: %s\nline: %d\n",opcode, value, line_number);*/
+	return (0);
+}
+
+
+void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
+{
+	extern stack_t *head;
+	stack_t *node;
+
+	if (strcmp(op, "push") == 0)
+	{
+		if (isdigit(*val) == 0)
+		{
+			printf("is digit error\n");
+			exit(1);
+		}
+		node = create_node(atoi(val));
+		f(&node, ln);
+	}
+	else if (strcmp(op, "pall") == 0)
+		f(&head, ln);
 }
