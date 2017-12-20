@@ -58,6 +58,7 @@ void print_top(stack_t **, unsigned int);
 void pop_top(stack_t **, unsigned int);
 void nop(stack_t **, unsigned int);
 void swap_nodes(stack_t **, unsigned int);
+void add_nodes(stack_t **, unsigned int);
 
 /*Error hanlding*/
 void err(int error_code, ...);
