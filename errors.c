@@ -12,11 +12,11 @@
  */
 void err(int error_code, ...)
 {
-	va_list args;
+	va_list ag;
 	char *opcode;
 	int l_num;
 
-	va_start(args, error_code);
+	va_start(ag, error_code);
 
 	switch (error_code)
 	{
@@ -25,22 +25,27 @@ void err(int error_code, ...)
 			break;
 		case 2:
 			printf("Error: Can't open file %s\n",
-				va_arg(args, char *));
+				va_arg(ag, char *));
 			break;
 		case 3:
-			l_num = va_arg(args, int);
-			opcode = va_arg(args, char *);
+			l_num = va_arg(ag, int);
+			opcode = va_arg(ag, char *);
 			printf("L%d: unknown instruction %s\n", l_num, opcode);
 			break;
 		case 4:
 			printf("Error: malloc failed\n");
 			break;
 		case 5:
-			printf("L%d: usage: push integer\n", va_arg(args, int));
+			printf("L%d: usage: push integer\n", va_arg(ag, int));
 			break;
 		case 6:
 			printf("L%d: can't pint, stack empty\n",
-				va_arg(args, int));
+				va_arg(ag, int));
+			break;
+		case 7:
+			printf("L%d: can't pop an empty stack\n",
+				va_arg(ag, int));
+			break;
 		default:
 			break;
 	}
