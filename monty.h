@@ -42,17 +42,21 @@ typedef struct instruction_s
 
 extern stack_t *head;
 
+/*File operations*/
 void open_file(char *);
 void read_file(FILE *);
 int len_chars(FILE *);
 void interpret_line(char *, int);
-void find_func(char *opcode, char *value, int line_number);
+void find_func(char *, char *, int);
 
+/*Stack operations*/
 stack_t *create_node(int n);
-void print_stack(stack_t **stack, unsigned int line_number);
-void add_to_stack(stack_t **stack, unsigned int line_number);
+void print_stack(stack_t **, unsigned int);
+void add_to_stack(stack_t **, unsigned int);
 void call_fun(void (*f)(stack_t **, unsigned int), char *, char *, int);
+void print_top(stack_t **, unsigned int);
 
+/*Error hanlding*/
 void err(int error_code, ...);
 
 
