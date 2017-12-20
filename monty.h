@@ -42,6 +42,7 @@ typedef struct instruction_s
 
 extern stack_t *head;
 
+
 /*File operations*/
 void open_file(char *);
 void read_file(FILE *);
@@ -51,6 +52,7 @@ void find_func(char *, char *, int);
 
 /*Stack operations*/
 stack_t *create_node(int n);
+void free_nodes(void);
 void print_stack(stack_t **, unsigned int);
 void add_to_stack(stack_t **, unsigned int);
 void call_fun(void (*f)(stack_t **, unsigned int), char *, char *, int);
