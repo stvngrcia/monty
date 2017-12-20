@@ -11,7 +11,7 @@ void open_file(char *file_name)
 	FILE *fd;
 
 	if (file_name == NULL)
-		exit(EXIT_FAILURE);
+		err(2, file_name);
 	/*Checks if the file exists*/
 	file_check = access(file_name, R_OK);
 	if (file_check == -1)
