@@ -38,10 +38,12 @@ void err(int error_code, ...)
 			break;
 		case 5:
 			printf("L%d: usage: push integer\n", va_arg(ag, int));
+
 			break;
 		default:
 			break;
 	}
+	free_nodes();
 	exit(EXIT_FAILURE);
 }
 
@@ -61,9 +63,9 @@ void more_err(int error_code, ...)
 	switch (error_code)
 	{
 		case 6:
-		printf("L%d: can't pint, stack empty\n",
-			va_arg(ag, int));
-		break;
+			printf("L%d: can't pint, stack empty\n",
+				va_arg(ag, int));
+			break;
 		case 7:
 			printf("L%d: can't pop an empty stack\n",
 				va_arg(ag, int));
@@ -72,8 +74,10 @@ void more_err(int error_code, ...)
 			l_num = va_arg(ag, int);
 			op = va_arg(ag, char *);
 			printf("L%d: can't %s, stack too short\n", l_num, op);
-		break;
+			break;
 		default:
 			break;
 	}
+	free_nodes();
+	exit(EXIT_FAILURE);
 }
