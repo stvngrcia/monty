@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdarg.h>
 
 
 
@@ -25,7 +26,6 @@ typedef struct stack_s
 	struct stack_s *next;
 } stack_t;
 
-
 /**
  * struct instruction_s - opcoode and its function
  * @opcode: the opcode
@@ -34,24 +34,26 @@ typedef struct stack_s
  * Description: opcode and its function
  * for stack, queues, LIFO, FIFO Holberton project
  */
- typedef struct instruction_s
- {
-	 char *opcode;
-	 void (*f)(stack_t **stack, unsigned int line_number);
- } instruction_t;
+typedef struct instruction_s
+{
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
+} instruction_t;
 
-stack_t *head;
+extern stack_t *head;
 
 void open_file(char *);
 void read_file(FILE *);
 int len_chars(FILE *);
 void interpret_line(char *, int);
-int find_func(char *opcode, char *value, int line_number);
+void find_func(char *opcode, char *value, int line_number);
 
 stack_t *create_node(int n);
 void print_stack(stack_t **stack, unsigned int line_number);
 void add_to_stack(stack_t **stack, unsigned int line_number);
 void call_fun(void (*f)(stack_t **, unsigned int), char *, char *, int);
+
+void err(int error_code, ...);
 
 
 #endif /*__MONTY__H*/
