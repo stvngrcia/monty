@@ -8,7 +8,7 @@
  * (3) ~> The file provided contains an invalid instruction.
  * (4) ~> When the program is unable to malloc more memory.
  * (5) ~> When the parameter passed to the instruction "push" is not an int.
- *
+ * (6) ~> When the stack it empty.
  */
 void err(int error_code, ...)
 {
@@ -39,7 +39,7 @@ void err(int error_code, ...)
 			printf("L%d: usage: push integer\n", va_arg(args, int));
 			break;
 		case 6:
-			printf("L%d: can't pint, stack empty",
+			printf("L%d: can't pint, stack empty\n",
 				va_arg(args, int));
 		default:
 			break;
