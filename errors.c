@@ -38,6 +38,9 @@ void err(int error_code, ...)
 		case 5:
 			printf("L%d: usage: push integer\n", va_arg(args, int));
 			break;
+		case 6:
+			printf("L%d: can't pint, stack empty",
+				va_arg(args, int));
 		default:
 			break;
 	}
