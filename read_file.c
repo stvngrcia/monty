@@ -41,7 +41,7 @@ void read_file(FILE *fd)
 	n = 0;
 
 	if (fd == NULL)
-		err(4);
+		err(2, file_name);
 
 	/*Getting each line in the file*/
 	for (line_n = 1; getline(&lineprt, &n, fd) != EOF; line_n++)
