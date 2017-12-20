@@ -1,21 +1,46 @@
 #include "monty.h"
 
-void add_to_stack(stack_t **stack, unsigned int line_number)
+/**
+ * add_to_stack - Adds a node to the stack.
+ * @new_node: Pointer to the new node.
+ * @line_number: Interger representing the line number of of the opcode.
+ */
+void add_to_stack(stack_t **new_node, unsigned int line_number)
 {
-	extern stack_t *head;
+	stack_t *tmp;
 
 	(void) line_number;
-	if (stack == NULL || *stack == NULL)
+	if (new_node == NULL || *new_node == NULL)
 		exit(EXIT_FAILURE);
 	if (head == NULL)
 	{
-		head = *stack;
+		head = *new_node;
+		return;
 	}
+	tmp = head;
+	head = *new_node;
+	head->next = tmp;
+	tmp->prev = head;
 }
+
+/**
+ * print_stack - Adds a node to the stack.
+ * @stack: Pointer to a pointer pointing to top node of the stack.
+ * @line_number: Interger representing the line number of of the opcode.
+ */
 void print_stack(stack_t **stack, unsigned int line_number)
-{	(void) stack;
+{
+	stack_t *tmp;
+
 	(void) line_number;
-	printf("---print_stack---\n");
+	if (stack == NULL)
+		exit(EXIT_FAILURE);
+	tmp = *stack;
+	while (tmp != NULL)
+	{
+		printf("%d\n", tmp->n);
+		tmp = tmp->next;
+	}
 }
 
 
@@ -28,7 +53,7 @@ stack_t *create_node(int n)
 {
 	stack_t *node;
 
-	node = malloc(sizeof (stack_t));
+	node = malloc(sizeof(stack_t));
 	if (node == NULL)
 		return (NULL);
 	node->next = NULL;
