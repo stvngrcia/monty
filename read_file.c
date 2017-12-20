@@ -90,10 +90,10 @@ void find_func(char *opcode, char *value, int line_number)
 	instruction_t func_list[] = {
 		{"push", add_to_stack},
 		{"pall", print_stack},
+		{"pint", print_top},
 		{NULL, NULL}
 	};
 	flag = 1;
-
 	/*Iterates through list to find the right function*/
 	for (i = 0; func_list[i].opcode != NULL; i++)
 	{
@@ -103,7 +103,6 @@ void find_func(char *opcode, char *value, int line_number)
 			call_fun(func_list[i].f, opcode, value, line_number);
 			flag = 0;
 		}
-
 	}
 	if (flag == 1)
 		err(3, line_number, opcode);
@@ -123,14 +122,11 @@ void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
 	if (strcmp(op, "push") == 0)
 	{
 	/*val is not a digit is the return value is 0*/
-		if (isdigit(*val) == 0)
-		{
-			printf("is digit error\n");
-			exit(1);
-		}
+		if (val == NULL || isdigit(*val) == 0)
+			err(5, ln);
 		node = create_node(atoi(val));
 		f(&node, ln);
 	}
-	else if (strcmp(op, "pall") == 0)
+	else
 		f(&head, ln);
 }
