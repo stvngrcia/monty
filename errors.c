@@ -9,11 +9,12 @@
  * (4) ~> When the program is unable to malloc more memory.
  * (5) ~> When the parameter passed to the instruction "push" is not an int.
  * (6) ~> When the stack it empty.
+ * (7) ~> When stack is too short for operation.
  */
 void err(int error_code, ...)
 {
 	va_list ag;
-	char *opcode;
+	char *op;
 	int l_num;
 
 	va_start(ag, error_code);
@@ -29,8 +30,8 @@ void err(int error_code, ...)
 			break;
 		case 3:
 			l_num = va_arg(ag, int);
-			opcode = va_arg(ag, char *);
-			printf("L%d: unknown instruction %s\n", l_num, opcode);
+			op = va_arg(ag, char *);
+			printf("L%d: unknown instruction %s\n", l_num, op);
 			break;
 		case 4:
 			printf("Error: malloc failed\n");
@@ -45,6 +46,11 @@ void err(int error_code, ...)
 		case 7:
 			printf("L%d: can't pop an empty stack\n",
 				va_arg(ag, int));
+			break;
+		case 8:
+			l_num = va_arg(ag, int);
+			op = va_arg(ag, char *);
+			printf("L%d: can't %s, stack too short\n", l_num, op);
 			break;
 		default:
 			break;
