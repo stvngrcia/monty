@@ -1,4 +1,5 @@
 #include "monty.h"
+stack_t *head;
 
 /**
  * main - Entry Point
@@ -8,9 +9,6 @@
  */
 int main(int argc, char **argv)
 {
-
-	extern stack_t *head;
-
 	head = NULL;
 	if (argc < 2 || argc > 2)
 		err(1);
