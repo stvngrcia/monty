@@ -71,6 +71,7 @@ void mod_nodes(stack_t **, unsigned int);
 
 /*String operations*/
 void print_char(stack_t **, unsigned int);
+void print_str(stack_t **, unsigned int);
 
 
 /*Error hanlding*/
