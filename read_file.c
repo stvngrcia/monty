@@ -4,6 +4,7 @@
  * open_file - Opens a file.
  * @file_name: String with the name of the file.
  */
+
 void open_file(char *file_name)
 {
 	int file_check;
@@ -29,6 +30,7 @@ void open_file(char *file_name)
  * read_file - Reads the content of a file line by line.
  * @fd: Pointer to a file descriptor of an open file
  */
+
 void read_file(FILE *fd)
 {
 	int line_n;
@@ -44,7 +46,7 @@ void read_file(FILE *fd)
 	/*Getting each line in the file*/
 	for (line_n = 1; getline(&lineprt, &n, fd) != EOF; line_n++)
 	{
-		interpret_line(lineprt, line_n, fd);
+		interpret_line(lineprt, line_n);
 	}
 	free(lineprt);
 }
@@ -55,20 +57,15 @@ void read_file(FILE *fd)
  * which function to call.
  * @lineptr: String representing a line in a file.
  * @line_number: Line number for the opcode.
- * @fd: File descriptor.
  */
-void interpret_line(char *lineptr, int line_number, FILE *fd)
+void interpret_line(char *lineptr, int line_number)
 {
 	const char *delim;
 	char *opcode;
 	char *value;
 
 	if (lineptr == NULL)
-	{
-		(void) fd;
-		/*fclose(fd);*/
 		err(4);
-	}
 	delim = "\n ";
 	opcode = strtok(lineptr, delim);
 
@@ -76,18 +73,16 @@ void interpret_line(char *lineptr, int line_number, FILE *fd)
 	if (opcode == NULL)
 		return;
 	value = strtok(NULL, delim);
-	find_func(opcode, value, line_number, lineptr, fd);
+	find_func(opcode, value, line_number);
 }
 
 /**
  * find_func - Finds the appropite function to run the opcode instructions.
  * @opcode: The operation code, It could be push, pall, ...
- * @val: The possible value for the operation.
- * @ln: Line number for the opcode.
- * @lptr: Pointer to the line.
- * @fd: File descriptor.
+ * @value: The possible value for the operation.
+ * @line_number: Line number for the opcode.
  */
-void find_func(char *opcode, char *val, int ln, char *lptr, FILE *fd)
+void find_func(char *opcode, char *value, int line_number)
 {
 	int i;
 	int flag;
@@ -109,17 +104,12 @@ void find_func(char *opcode, char *val, int ln, char *lptr, FILE *fd)
 		/*When 0 found the right opcode*/
 		if (strcmp(opcode, func_list[i].opcode) == 0)
 		{
-			call_fun(func_list[i].f, opcode, val, ln, lptr, fd);
+			call_fun(func_list[i].f, opcode, value, line_number);
 			flag = 0;
 		}
 	}
 	if (flag == 1)
-	{
-		free(lptr);
-		(void) fd;
-		/*fclose(fd);*/
-		err(3, ln, opcode);
-	}
+		err(3, line_number, opcode);
 }
 
 /**
@@ -128,23 +118,16 @@ void find_func(char *opcode, char *val, int ln, char *lptr, FILE *fd)
  * @op: string representing the opcode.
  * @val: string representing a numeric value.
  * @ln: line numeber for the instruction.
- * @lptr: Pointer to the line.
- * @fd: File descriptor.
  */
-void call_fun(func f, char *op, char *val, int ln, char *lptr, FILE *fd)
+void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
 {
 	stack_t *node;
 
 	if (strcmp(op, "push") == 0)
 	{
-		/*val is not a digit is the return value is 0*/
+	/*val is not a digit is the return value is 0*/
 		if (val == NULL || isdigit(*val) == 0)
-		{
-			free(lptr);
-			(void) fd;
-			/*fclose(fd);*/
 			err(5, ln);
-		}
 		node = create_node(atoi(val));
 		f(&node, ln);
 	}
