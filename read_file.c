@@ -42,7 +42,7 @@ void read_file(FILE *fd)
 		err(2, "file_name");
 
 	/*Getting each line in the file*/
-	for (line_n = 0; getline(&lineprt, &n, fd) != EOF; line_n++)
+	for (line_n = 1; getline(&lineprt, &n, fd) != EOF; line_n++)
 	{
 		interpret_line(lineprt, line_n, fd);
 	}
