@@ -34,11 +34,13 @@ void open_file(char *file_name)
 void read_file(FILE *fd)
 {
 	int line_n;
+	int format;
 	char *lineprt;
 	size_t n;
 
 	lineprt = NULL;
 	n = 0;
+	format = 0;
 
 	if (fd == NULL)
 		err(2, "file_name");
@@ -46,7 +48,7 @@ void read_file(FILE *fd)
 	/*Getting each line in the file*/
 	for (line_n = 1; getline(&lineprt, &n, fd) != EOF; line_n++)
 	{
-		interpret_line(lineprt, line_n);
+		format = interpret_line(lineprt, line_n, format);
 	}
 	free(lineprt);
 }
@@ -57,8 +59,11 @@ void read_file(FILE *fd)
  * which function to call.
  * @lineptr: String representing a line in a file.
  * @line_number: Line number for the opcode.
+ * @format: Format specifier. If 0 Nodes will be entered as a stack.
+ * if 1 nodes will be entered as a queue.
+ * Return: Returns 0 if the opcode is stack. 1 if queue.
  */
-void interpret_line(char *lineptr, int line_number)
+int interpret_line(char *lineptr, int line_number, int format)
 {
 	const char *delim;
 	char *opcode;
@@ -71,18 +76,27 @@ void interpret_line(char *lineptr, int line_number)
 
 	/*hanlding blank lines*/
 	if (opcode == NULL)
-		return;
+		return (format);
 	value = strtok(NULL, delim);
-	find_func(opcode, value, line_number);
+
+	if (strcmp(opcode, "queue") == 0)
+		return (1);
+	else if (strcmp(opcode, "stack") == 0)
+		return (0);
+
+	find_func(opcode, value, line_number, format);
+	return (format);
 }
 
 /**
  * find_func - Finds the appropite function to run the opcode instructions.
  * @opcode: The operation code, It could be push, pall, ...
  * @value: The possible value for the operation.
- * @line_number: Line number for the opcode.
+ * @ln: Line number for the opcode.
+ * @format: Format specifier. If 0 Nodes will be entered as a stack.
+ * if 1 nodes will be entered as a queue.
  */
-void find_func(char *opcode, char *value, int line_number)
+void find_func(char *opcode, char *value, int ln, int format)
 {
 	int i;
 	int flag;
@@ -114,12 +128,12 @@ void find_func(char *opcode, char *value, int line_number)
 		/*When 0 found the right opcode*/
 		if (strcmp(opcode, func_list[i].opcode) == 0)
 		{
-			call_fun(func_list[i].f, opcode, value, line_number);
+			call_fun(func_list[i].f, opcode, value, ln, format);
 			flag = 0;
 		}
 	}
 	if (flag == 1)
-		err(3, line_number, opcode);
+		err(3, ln, opcode);
 }
 
 /**
@@ -128,8 +142,10 @@ void find_func(char *opcode, char *value, int line_number)
  * @op: string representing the opcode.
  * @val: string representing a numeric value.
  * @ln: line numeber for the instruction.
+ * @format: Format specifier. If 0 Nodes will be entered as a stack.
+ * if 1 nodes will be entered as a queue.
  */
-void call_fun(op_func f, char *op, char *val, int ln)
+void call_fun(op_func f, char *op, char *val, int ln, int format)
 {
 	stack_t *node;
 	int flag;
@@ -153,7 +169,10 @@ void call_fun(op_func f, char *op, char *val, int ln)
 				err(5, ln);
 		}
 		node = create_node(atoi(val) * flag);
-		f(&node, ln);
+		if (format == 0)
+			f(&node, ln);
+		if (format == 1)
+			add_to_queue(&node, ln);
 	}
 	else
 		f(&head, ln);
