@@ -66,7 +66,7 @@ void interpret_line(char *lineptr, int line_number)
 
 	if (lineptr == NULL)
 		err(4);
-	delim = "\n\t ";
+	delim = "\n ";
 	opcode = strtok(lineptr, delim);
 
 	/*hanlding blank lines*/
