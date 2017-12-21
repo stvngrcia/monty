@@ -4,7 +4,6 @@
  * open_file - Opens a file.
  * @file_name: String with the name of the file.
  */
-
 void open_file(char *file_name)
 {
 	int file_check;
@@ -30,7 +29,6 @@ void open_file(char *file_name)
  * read_file - Reads the content of a file line by line.
  * @fd: Pointer to a file descriptor of an open file
  */
-
 void read_file(FILE *fd)
 {
 	int line_n;
@@ -44,7 +42,7 @@ void read_file(FILE *fd)
 		err(2, "file_name");
 
 	/*Getting each line in the file*/
-	for (line_n = 1; getline(&lineprt, &n, fd) != EOF; line_n++)
+	for (line_n = 0; getline(&lineprt, &n, fd) != EOF; line_n++)
 	{
 		interpret_line(lineprt, line_n, fd);
 	}
@@ -121,7 +119,6 @@ void find_func(char *opcode, char *val, int line_number, char *lptr, FILE *fd)
 		fclose(fd);
 		err(3, line_number, opcode);
 	}
-
 }
 
 /**
