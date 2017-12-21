@@ -137,7 +137,7 @@ void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
 		/*val is not a digit is the return value is 0*/
 		if (val == NULL)
 			err(5, ln);
-		for(i = 0; val[i] != '\0'; i++)
+		for (i = 0; val[i] != '\0'; i++)
 		{
 			if (isdigit(val[i]) == 0)
 				err(5, ln);
