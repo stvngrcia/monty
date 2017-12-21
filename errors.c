@@ -38,7 +38,6 @@ void err(int error_code, ...)
 			break;
 		case 5:
 			printf("L%d: usage: push integer\n", va_arg(ag, int));
-
 			break;
 		default:
 			break;

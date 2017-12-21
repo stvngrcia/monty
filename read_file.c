@@ -82,11 +82,11 @@ void interpret_line(char *lineptr, int line_number, FILE *fd)
  * find_func - Finds the appropite function to run the opcode instructions.
  * @opcode: The operation code, It could be push, pall, ...
  * @val: The possible value for the operation.
- * @line_number: Line number for the opcode.
+ * @ln: Line number for the opcode.
  * @lptr: Pointer to the line.
  * @fd: File descriptor.
  */
-void find_func(char *opcode, char *val, int line_number, char *lptr, FILE *fd)
+void find_func(char *opcode, char *val, int ln, char *lptr, FILE *fd)
 {
 	int i;
 	int flag;
@@ -108,8 +108,7 @@ void find_func(char *opcode, char *val, int line_number, char *lptr, FILE *fd)
 		/*When 0 found the right opcode*/
 		if (strcmp(opcode, func_list[i].opcode) == 0)
 		{
-			call_fun(func_list[i].f, opcode, val,
-				line_number, lptr, fd);
+			call_fun(func_list[i].f, opcode, val, ln, lptr, fd);
 			flag = 0;
 		}
 	}
@@ -117,7 +116,7 @@ void find_func(char *opcode, char *val, int line_number, char *lptr, FILE *fd)
 	{
 		free(lptr);
 		fclose(fd);
-		err(3, line_number, opcode);
+		err(3, ln, opcode);
 	}
 }
 
