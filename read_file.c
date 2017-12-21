@@ -123,6 +123,7 @@ void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
 {
 	stack_t *node;
 	int flag;
+	int i;
 
 	flag = 1;
 	if (strcmp(op, "push") == 0)
@@ -134,8 +135,13 @@ void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
 			flag = -1;
 		}
 		/*val is not a digit is the return value is 0*/
-		if (val == NULL || isdigit(*val) == 0)
+		if (val == NULL)
 			err(5, ln);
+		for(i = 0; val[i] != '\0'; i++)
+		{
+			if (isdigit(val[i]) == 0)
+				err(5, ln);
+		}
 		node = create_node(atoi(val) * flag);
 		f(&node, ln);
 	}
