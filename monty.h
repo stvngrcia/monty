@@ -66,6 +66,7 @@ void add_nodes(stack_t **, unsigned int);
 void sub_nodes(stack_t **, unsigned int);
 void div_nodes(stack_t **, unsigned int);
 void mul_nodes(stack_t **, unsigned int);
+void mod_nodes(stack_t **, unsigned int);
 
 /*Error hanlding*/
 void err(int error_code, ...);
