@@ -96,6 +96,7 @@ void find_func(char *opcode, char *value, int line_number)
 		{"swap", swap_nodes},
 		{"add", add_nodes},
 		{"sub", sub_nodes},
+		{"div", div_nodes},
 		{NULL, NULL}
 	};
 	flag = 1;

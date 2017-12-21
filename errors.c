@@ -52,6 +52,7 @@ void err(int error_code, ...)
  * (6) ~> When the stack it empty for pint.
  * (7) ~> When the stack it empty for pop.
  * (8) ~> When stack is too short for operation.
+ * (9) ~> Division by zero.
  */
 void more_err(int error_code, ...)
 {
@@ -74,6 +75,10 @@ void more_err(int error_code, ...)
 			l_num = va_arg(ag, unsigned int);
 			op = va_arg(ag, char *);
 			printf("L%d: can't %s, stack too short\n", l_num, op);
+			break;
+		case 9:
+			printf("L%d: division by zero\n",
+				va_arg(ag, unsigned int));
 			break;
 		default:
 			break;
