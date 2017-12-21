@@ -68,9 +68,15 @@ void div_nodes(stack_t **, unsigned int);
 void mul_nodes(stack_t **, unsigned int);
 void mod_nodes(stack_t **, unsigned int);
 
+
+/*String operations*/
+void print_char(stack_t **, unsigned int);
+
+
 /*Error hanlding*/
 void err(int error_code, ...);
 void more_err(int error_code, ...);
+void string_err(int error_code, ...);
 
 
 #endif /*__MONTY__H*/
