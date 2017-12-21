@@ -59,6 +59,7 @@ void more_err(int error_code, ...)
 	char *op;
 	int l_num;
 
+	va_start(ag, error_code);
 	switch (error_code)
 	{
 		case 6:
@@ -70,7 +71,7 @@ void more_err(int error_code, ...)
 				va_arg(ag, int));
 			break;
 		case 8:
-			l_num = va_arg(ag, int);
+			l_num = va_arg(ag, unsigned int);
 			op = va_arg(ag, char *);
 			printf("L%d: can't %s, stack too short\n", l_num, op);
 			break;
