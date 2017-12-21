@@ -93,7 +93,7 @@ void add_to_queue(stack_t **new_node, __attribute__((unused))unsigned int ln)
 	tmp = head;
 	while (tmp->next != NULL)
 		tmp = tmp->next;
-	
+
 	tmp->next = *new_node;
 	(*new_node)->prev = tmp;
 }
