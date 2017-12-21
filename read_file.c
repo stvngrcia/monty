@@ -122,13 +122,21 @@ void find_func(char *opcode, char *value, int line_number)
 void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
 {
 	stack_t *node;
+	int flag;
 
+	flag = 1;
 	if (strcmp(op, "push") == 0)
 	{
-	/*val is not a digit is the return value is 0*/
+		/*Checks if the number is negative and moves the val ptr*/
+		if (val[0] == '-')
+		{
+			val = val + 1;
+			flag = -1;
+		}
+		/*val is not a digit is the return value is 0*/
 		if (val == NULL || isdigit(*val) == 0)
 			err(5, ln);
-		node = create_node(atoi(val));
+		node = create_node(atoi(val) * flag);
 		f(&node, ln);
 	}
 	else
