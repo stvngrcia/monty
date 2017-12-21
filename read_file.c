@@ -102,6 +102,8 @@ void find_func(char *opcode, char *value, int line_number)
 		{NULL, NULL}
 	};
 	flag = 1;
+	if (opcode[0] == '#')
+		return;
 	/*Iterates through list to find the right function*/
 	for (i = 0; func_list[i].opcode != NULL; i++)
 	{
