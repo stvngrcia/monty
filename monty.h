@@ -57,7 +57,7 @@ stack_t *create_node(int n);
 void free_nodes(void);
 void print_stack(stack_t **, unsigned int);
 void add_to_stack(stack_t **, unsigned int);
-void call_fun(void (*f)(stack_t **, unsigned int), char *, char *, int);
+void call_fun(op_func, char *, char *, int);
 void print_top(stack_t **, unsigned int);
 void pop_top(stack_t **, unsigned int);
 void nop(stack_t **, unsigned int);
