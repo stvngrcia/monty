@@ -101,6 +101,7 @@ void find_func(char *opcode, char *value, int line_number)
 		{"mod", mod_nodes},
 		{"pchar", print_char},
 		{"pstr", print_str},
+		{"rotl", rotl},
 		{NULL, NULL}
 	};
 
