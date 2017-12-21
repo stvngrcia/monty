@@ -42,6 +42,8 @@ typedef struct instruction_s
 
 extern stack_t *head;
 
+/*Type for opcode functions*/
+typedef void (*op_func)(stack_t **, unsigned int);
 
 /*File operations*/
 void open_file(char *);

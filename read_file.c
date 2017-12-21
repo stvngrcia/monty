@@ -129,7 +129,7 @@ void find_func(char *opcode, char *value, int line_number)
  * @val: string representing a numeric value.
  * @ln: line numeber for the instruction.
  */
-void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
+void call_fun(op_func f, char *op, char *val, int ln)
 {
 	stack_t *node;
 	int flag;
