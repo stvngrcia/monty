@@ -99,13 +99,14 @@ void find_func(char *opcode, char *value, int line_number)
 		{"div", div_nodes},
 		{"mul", mul_nodes},
 		{"mod", mod_nodes},
+		{"pchar", print_char},
 		{NULL, NULL}
 	};
-	flag = 1;
+	
 	if (opcode[0] == '#')
 		return;
 	/*Iterates through list to find the right function*/
-	for (i = 0; func_list[i].opcode != NULL; i++)
+	for (flag = 1, i = 0; func_list[i].opcode != NULL; i++)
 	{
 		/*When 0 found the right opcode*/
 		if (strcmp(opcode, func_list[i].opcode) == 0)
