@@ -29,7 +29,10 @@ void print_str(stack_t **stack, __attribute__((unused))unsigned int ln)
 	stack_t *tmp;
 
 	if (stack == NULL || *stack == NULL)
+	{
 		printf("\n");
+		return;
+	}
 
 	tmp = *stack;
 	while (tmp != NULL)
