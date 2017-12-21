@@ -1,4 +1,4 @@
-push 0
+push x
 push 1
 push 2
 push 3
