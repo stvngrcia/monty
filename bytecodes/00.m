@@ -1,7 +1,7 @@
 push 1
-push 1
+push -72
 push 2
-push 1
+push
 pall
 
 

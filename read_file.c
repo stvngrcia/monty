@@ -128,7 +128,7 @@ void call_fun(void (*f)(stack_t **, unsigned int), char *op, char *val, int ln)
 	if (strcmp(op, "push") == 0)
 	{
 		/*Checks if the number is negative and moves the val ptr*/
-		if (val[0] == '-')
+		if (val != NULL && val[0] == '-')
 		{
 			val = val + 1;
 			flag = -1;
