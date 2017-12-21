@@ -100,9 +100,10 @@ void find_func(char *opcode, char *value, int line_number)
 		{"mul", mul_nodes},
 		{"mod", mod_nodes},
 		{"pchar", print_char},
+		{"pstr", print_str},
 		{NULL, NULL}
 	};
-	
+
 	if (opcode[0] == '#')
 		return;
 	/*Iterates through list to find the right function*/
