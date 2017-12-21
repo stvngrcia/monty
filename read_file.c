@@ -65,7 +65,8 @@ void interpret_line(char *lineptr, int line_number, FILE *fd)
 
 	if (lineptr == NULL)
 	{
-		fclose(fd);
+		(void) fd;
+		/*fclose(fd);*/
 		err(4);
 	}
 	delim = "\n ";
@@ -115,7 +116,8 @@ void find_func(char *opcode, char *val, int ln, char *lptr, FILE *fd)
 	if (flag == 1)
 	{
 		free(lptr);
-		fclose(fd);
+		(void) fd;
+		/*fclose(fd);*/
 		err(3, ln, opcode);
 	}
 }
@@ -135,14 +137,14 @@ void call_fun(func f, char *op, char *val, int ln, char *lptr, FILE *fd)
 
 	if (strcmp(op, "push") == 0)
 	{
-	/*val is not a digit is the return value is 0*/
+		/*val is not a digit is the return value is 0*/
 		if (val == NULL || isdigit(*val) == 0)
 		{
 			free(lptr);
-			fclose(fd);
+			(void) fd;
+			/*fclose(fd);*/
 			err(5, ln);
 		}
-
 		node = create_node(atoi(val));
 		f(&node, ln);
 	}
